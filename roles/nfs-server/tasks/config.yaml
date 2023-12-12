@@ -1,0 +1,28 @@
+- name: "config :: Create a directory if it does not exist"
+  become: true
+  ansible.builtin.file:
+    path: /mnt/kubernetes-volumes/data
+    state: directory
+    owner: nobody
+    group: nogroup
+    mode: '0777'
+
+- name: "config :: limit the share to the CIDR used by the Kubernetes Cluster nodes for external access."
+  become: true
+  ansible.builtin.lineinfile:
+    path: /etc/exports
+    state: present
+    line: "{{ item }}"
+  with_items:
+    - '/mnt/kubernetes-volumes {{ nfs.whitelist_ips }}(rw,sync,no_subtree_check,insecure,no_root_squash)' 
+
+- name: "config :: Restart nfs-kernel-server.service"
+  become: true
+  ansible.builtin.systemd:
+    daemon_reload: yes
+    state: started
+    name: nfs-kernel-server.service
+
+- name: "config :: Re-export the share"
+  become: true
+  command: exportfs -rav

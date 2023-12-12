@@ -1,0 +1,24 @@
+- name: "deploy :: applies the MetalLB manifests"
+  ansible.builtin.shell: "kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/{{ metallb.version }}/config/manifests/metallb-native.yaml"
+
+- name: "deploy :: now feed it to apply MetalLB config"
+  ansible.builtin.shell: |
+    cat <<EOF | kubectl apply -f -
+    apiVersion: metallb.io/v1beta1
+    kind: IPAddressPool
+    metadata:
+      name: ip-pool
+      namespace: metallb-system
+    spec:
+      addresses:
+      - {{ metallb.addresses }}
+    ---
+    apiVersion: metallb.io/v1beta1
+    kind: L2Advertisement
+    metadata:
+      name: metallb-ip-space
+      namespace: metallb-system
+    spec:
+      ipAddressPools:
+      - ip-pool
+    EOF

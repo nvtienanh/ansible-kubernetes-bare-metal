@@ -1,0 +1,2 @@
+- name: "deploy :: applies the Nginx controller manifests"
+  ansible.builtin.shell: "kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-{{ ingress_nginx.version }}/deploy/static/provider/{{ ingress_nginx.provider }}/deploy.yaml"

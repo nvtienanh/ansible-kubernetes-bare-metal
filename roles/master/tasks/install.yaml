@@ -1,0 +1,18 @@
+- name: "install :: updates package lists"
+  become: true
+  ansible.builtin.apt:
+    update_cache: true
+    force_apt_get: true
+
+- name: "install :: installs the Kubernetes packages"
+  become: true
+  ansible.builtin.apt:
+    pkg:
+      - kubectl=1.28.*
+    force_apt_get: true
+
+- name: "config :: Hold kubeadm package at current version"
+  become: true
+  ansible.builtin.dpkg_selections:
+    name: 'kubectl'
+    selection: hold

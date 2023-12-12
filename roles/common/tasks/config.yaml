@@ -1,0 +1,37 @@
+- name: "config :: disables system swap"
+  become: true
+  ansible.builtin.shell: "swapoff -a"
+
+- name: "config :: removes current swaps from the filesystem tab"
+  become: true
+  ansible.builtin.lineinfile:
+    path: "/etc/fstab"
+    regexp: '(?i)^([^#][\S]+\s+(none|swap)\s+swap.*)'
+    line: '# \1'
+    backrefs: true
+    state: present
+
+- name: "config :: ensures that br_netfilter is enabled"
+  become: true
+  community.general.modprobe:
+    name: "br_netfilter"
+    state: present
+
+- name: "config :: ensures that overlay is enabled"
+  become: true
+  community.general.modprobe:
+    name: "overlay"
+    state: present
+
+- name: "config :: sets the required networking rules"
+  become: true
+  ansible.builtin.sysctl:
+    name: "{{ item }}"
+    value: "1"
+    state: present
+    reload: true
+  loop:
+    - "net.bridge.bridge-nf-call-iptables"
+    - "net.bridge.bridge-nf-call-ip6tables"
+    - "net.ipv4.ip_forward"
+    

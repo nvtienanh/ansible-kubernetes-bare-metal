@@ -1,0 +1,8 @@
+
+# - name: "common :: includes the configuration tasks"
+#   ansible.builtin.include_tasks:
+#     file: "config.yaml"
+
+- name: "common :: includes the installation tasks"
+  ansible.builtin.include_tasks:
+    file: "install.yaml"

@@ -1,0 +1,32 @@
+- name: "config :: initializes the cluster"
+  become: true
+  ansible.builtin.shell: |
+    kubeadm init --pod-network-cidr={{ kubernetes.CIDR }} \
+                 --apiserver-advertise-address {{ ansible_default_ipv4.address }} 
+  register: init
+
+- name: "config :: creates the root directory"
+  ansible.builtin.file:
+    path: "{{ kubernetes.config }}"
+    state: directory
+
+- name: "config :: copies the configuration file to the home directory"
+  become: true
+  ansible.builtin.copy:
+    src: "/etc/kubernetes/admin.conf"
+    dest: "{{ kubernetes.config }}/config"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: "0755"
+    remote_src: true
+
+- name: "config :: fetches the configuration file to the local station"
+  become: true
+  ansible.builtin.fetch:
+    src: "/etc/kubernetes/admin.conf"
+    dest: "{{ lookup('env', 'HOME') }}/.kube/config"
+    owner: "{{ lookup('env', 'USER') }}"
+    group: "{{ lookup('env', 'USER') }}"
+    mode: "0755"
+    flat: true
+  run_once: true

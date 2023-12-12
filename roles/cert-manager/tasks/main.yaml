@@ -1,0 +1,3 @@
+- name: "main :: includes the deployment tasks"
+  ansible.builtin.include_tasks:
+    file: "install.yaml"

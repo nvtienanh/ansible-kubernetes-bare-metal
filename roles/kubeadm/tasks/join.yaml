@@ -1,0 +1,8 @@
+- name: "join :: get join command"
+  become: true
+  ansible.builtin.shell: kubeadm token create --print-join-command
+  register: join_command_raw
+
+- name: "join :: set join command"
+  ansible.builtin.set_fact:
+    join_command: "{{ join_command_raw.stdout_lines[0] }}"

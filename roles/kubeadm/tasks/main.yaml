@@ -1,0 +1,3 @@
+- name: "main :: includes the joining command tasks"
+  ansible.builtin.include_tasks:
+    file: "join.yaml"

@@ -1,0 +1,25 @@
+- name: "install :: adds Containerd gpg key"
+  become: true
+  ansible.builtin.apt_key:
+    url: "https://download.docker.com/linux/ubuntu/gpg"
+    state: present
+
+- name: "install :: adds the official Containerd repository"
+  become: true
+  ansible.builtin.apt_repository:
+    repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu jammy stable"
+    state: present
+    filename: docker
+
+- name: "install :: updates package lists"
+  become: true
+  ansible.builtin.apt:
+    update_cache: true
+    force_apt_get: true
+  
+- name: "install :: installs the ContainerD packages"
+  become: true
+  ansible.builtin.apt:
+    pkg:
+      - containerd.io
+    force_apt_get: true

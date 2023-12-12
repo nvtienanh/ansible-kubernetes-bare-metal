@@ -1,0 +1,3 @@
+- name: "main :: includes the configuration tasks"
+  ansible.builtin.include_tasks:
+    file: "config.yaml"

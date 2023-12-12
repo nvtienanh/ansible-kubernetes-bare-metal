@@ -1,0 +1,2 @@
+- name: "deploy :: applies the Calico manifests for 50 nodes or less"
+  ansible.builtin.shell: "kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/{{ calico.version }}/manifests/calico.yaml"

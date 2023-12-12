@@ -1,0 +1,7 @@
+- name: "config :: TCP port 6443 on master is reachable from worker"
+  become: true
+  ansible.builtin.wait_for: "host={{ hostvars[groups['masters'][0]].ansible_host }} port=6443 timeout=1"
+
+- name: "config :: joins the workers to the cluster"
+  become: true
+  ansible.builtin.shell: "{{ hostvars[groups['masters'][0]].join_command }}"

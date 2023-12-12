@@ -1,0 +1,8 @@
+# JetBrains
+.idea
+
+# Source Control
+.git
+
+# Visual Studio Code
+.vscode

@@ -1,0 +1,24 @@
+- name: "install :: updates package lists"
+  become: true
+  ansible.builtin.apt:
+    update_cache: true
+    force_apt_get: true
+
+- name: "install :: upgrades package lists"
+  become: true
+  ansible.builtin.apt:
+    upgrade: full
+    force_apt_get: true
+
+- name: "install :: installs the required Linux packages"
+  become: true
+  ansible.builtin.apt:
+    pkg:
+      # - apt-transport-https
+      # - curl/home/anh/kubernetes-main/inventory
+      # - gnupg2
+      # - software-properties-common
+      # - ca-certificates
+      # - apt-utils
+      - nfs-common
+    force_apt_get: true

@@ -1,0 +1,23 @@
+kubernetes:
+  config: "/home/{{ ansible_user }}/.kube"
+  CIDR: "10.244.0.0/16"
+
+calico:
+  version: "v3.26.4"
+
+metallb:
+  addresses: 192.168.1.50/32
+  version: "v0.13.12"
+
+ingress_nginx:
+  version: "v1.9.4"
+  provider: "cloud"
+
+cert_manager:
+  version: "v1.13.3"
+
+letsencrypt:
+  email: nvtienanh@gmail.com
+
+nfs:
+  whitelist_ips: 192.168.1.0/27 # 192.168.1.0 -> 192.168.1.31

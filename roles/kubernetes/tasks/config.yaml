@@ -1,0 +1,17 @@
+- name: "config :: enable the Kubelet service"
+  become: true
+  ansible.builtin.service:
+    name: kubelet
+    enabled: yes
+  
+- name: "config :: Hold kubelet package at current version"
+  become: true
+  ansible.builtin.dpkg_selections:
+    name: 'kubelet'
+    selection: hold
+
+- name: "config :: Hold kubeadm package at current version"
+  become: true
+  ansible.builtin.dpkg_selections:
+    name: 'kubeadm'
+    selection: hold

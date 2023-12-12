@@ -1,0 +1,38 @@
+- name: "install :: updates package lists"
+  become: true
+  ansible.builtin.apt:
+    update_cache: true
+    force_apt_get: true
+
+- name: "install :: upgrades package lists"
+  become: true
+  ansible.builtin.apt:
+    upgrade: full
+    force_apt_get: true
+
+- name: "install :: adds the official Google key"
+  become: true
+  ansible.builtin.apt_key:
+    url: "https://packages.cloud.google.com/apt/doc/apt-key.gpg"
+    state: present
+
+- name: "install :: adds the official Kubernetes repository"
+  become: true
+  ansible.builtin.apt_repository:
+    repo: "deb [arch=amd64] https://apt.kubernetes.io/ kubernetes-xenial main"
+    state: present
+
+- name: "install :: updates package lists"
+  become: true
+  ansible.builtin.apt:
+    update_cache: true
+    force_apt_get: true
+
+- name: "install :: installs the Kubernetes packages"
+  become: true
+  ansible.builtin.apt:
+    pkg:
+      - kubeadm=1.28.*
+      - kubelet=1.28.*
+      - kubernetes-cni
+    force_apt_get: true
