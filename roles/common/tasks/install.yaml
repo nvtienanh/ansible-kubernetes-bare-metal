@@ -14,11 +14,11 @@
   become: true
   ansible.builtin.apt:
     pkg:
-      # - apt-transport-https
-      # - curl/home/anh/kubernetes-main/inventory
-      # - gnupg2
-      # - software-properties-common
-      # - ca-certificates
-      # - apt-utils
+      - apt-transport-https
+      - curl
+      - gnupg2
+      - software-properties-common
+      - ca-certificates
+      - apt-utils
       - nfs-common
     force_apt_get: true

@@ -6,7 +6,7 @@ calico:
   version: "v3.26.4"
 
 metallb:
-  addresses: 192.168.1.50/32
+  addresses: 192.168.1.50/32 # 192.168.1.50
   version: "v0.13.12"
 
 ingress_nginx:
@@ -17,7 +17,7 @@ cert_manager:
   version: "v1.13.3"
 
 letsencrypt:
-  email: nvtienanh@gmail.com
+  email: your-email@gmail.com
 
 nfs:
-  whitelist_ips: 192.168.1.0/27 # 192.168.1.0 -> 192.168.1.31
+  whitelist_ips: 192.168.1.0/27 # Ips allow access to NFS server 192.168.1.0 -> 192.168.1.31

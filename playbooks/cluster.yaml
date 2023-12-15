@@ -103,4 +103,3 @@
     - name: "includes the NFS Storage role"
       ansible.builtin.include_role:
         name: "nfs-server"
-

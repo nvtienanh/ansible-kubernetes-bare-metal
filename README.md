@@ -21,7 +21,7 @@
 - **Calico**: an open source networking and network security solution for containers (CNI).
 - **MetalLB**: a bare metal load-balancer for Kubernetes.
 - **Nginx**: an Ingress controller.
-- **Dashboard**: a web-based Kubernetes user interface.
+- **Cert-Manager**: adds certificates and certificate issuers as resource types in Kubernetes cluster.
 
 ## Requirements
 
@@ -54,51 +54,7 @@ $ vim defaults/main.yaml
 $ vim inventory/hosts.ini
 ```
 
-5. Edit the Ansible Vault variables file to your requirements:
-```
-$ vim vault/main.yaml
-```
-
-6. Use Ansible Vault command line to encrypt the Vault variables file:
-```
-$ ansible-vault encrypt vault/main.yaml
-```
-
-7. Run the Ansible Playbook:
+5. Run the Ansible Playbook:
 ```
 $ ansible-playbook -i inventory/hosts.ini -K playbooks/cluster.yaml
 ```
-
-8. Get the IPv4 address of the deployed Nginx ingress controller:
-```
-$ kubectl get services --all-namespaces
-```
-
-| NAMESPACE     | NAME                     | TYPE         | CLUSTER-IP   | EXTERNAL-IP  | PORT(S)                    | AGE  |
-|---------------|--------------------------|--------------|--------------|--------------|----------------------------|------|
-| ingress-nginx | ingress-nginx-controller | LoadBalancer | 10.96.91.254 | IPv4 address | 80:31478/TCP,443:31633/TCP | 149m | 
-
-9. Edit the hosts file on your local working station to include the path to the dashboard:
-```
-$ sudo vim /etc/hosts
-```
-```
-<IPv4 address of the Nginx ingress controller> <dashboard.prefix>.<cluster.domain>
-
-```
-
-For example:
-```
-192.168.14.195 dashboard.cluster.local
-```
-
-10. During the deployment process the Ansible Playbook is generating a new admin token for the dashboard. Get it by running the following command:
-```
-$ cat /home/<Your username>/.kube/dashboard
-```
-
-11. Browse to the address you've just added to the hosts file.
-12. Supply the created admin token in order of login into the dashboard.
-
-
-ansible-playbook -i inventory/hosts.ini playbooks/cluster.yaml
