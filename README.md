@@ -36,7 +36,7 @@ $ ssh-copy-id <The remote username>@<The IPv4 address of the remote machine>
 
 1. Clone this Git repository to your local working station:
 ```
-$ git clone https://github.com/ArielLahiany/kubernetes.git
+$ git clone https://github.com/nvtienanh/ansible-kubernetes-bare-metal.git
 ```
 
 2. Change directory to the root directory of the project:
@@ -46,12 +46,12 @@ $ cd kubernetes
 
 3. Edit the values of the default variables to your requirements:
 ```
-$ vim defaults/main.yaml
+$ nano defaults/main.yaml
 ```
 
 4. Edit the Ansible inventory file to your requirements:
 ```
-$ vim inventory/hosts.ini
+$ nano inventory/hosts.ini
 ```
 
 5. Run the Ansible Playbook:
